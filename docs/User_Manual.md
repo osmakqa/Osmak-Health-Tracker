@@ -9,9 +9,19 @@ The **Employee Health & Wellness Tracker** is a web-based application designed t
 ---
 
 ## 2. Accessing the System
+
+### 2.1 Logging In
 1.  Open your web browser (Chrome is recommended).
 2.  Navigate to the system URL provided by the IT or Occupational Health Department.
-3.  The system does not require a login. Access is controlled via the unique URL.
+3.  You will be presented with a login screen. Enter the password provided by your administrator and click **"Enter"**.
+
+### 2.2 Logging Out
+*   To log out and secure the application, click the **"Sign Out"** button located at the top-right of the page at any time. You will be returned to the login screen.
+
+### 2.3 Accessing Raw Data (Google Sheet)
+*   For administrative purposes, a direct link to the backend Google Sheet is available.
+*   Click the **spreadsheet icon** in the header.
+*   You will be prompted for a password. Enter the correct password to open the sheet in a new browser tab.
 
 ---
 
@@ -79,5 +89,5 @@ When you click on an employee, a detailed modal appears with four tabs.
 | Issue | Solution |
 | :--- | :--- |
 | **Data is not loading or seems outdated.** | Click the "Refresh" button on the Dashboard. If the problem persists, contact IT to ensure the Google Apps Script backend is running correctly. |
-| **"Failed to load data" error on Dashboard.**| This indicates a problem connecting to the Google Sheet backend. Verify your internet connection and check if the Google Sheet is accessible. |
+| **"Failed to load data" error on Dashboard.**| This indicates a problem connecting to the Google Sheet backend. Verify your internet connection and check if the Google Sheet is accessible. Also confirm with IT that the `SCRIPT_URL` in the application code is correct. |
 | **A removed employee still appears.**| Data is cached for performance. Click the "Refresh" button to force an update from the backend. |

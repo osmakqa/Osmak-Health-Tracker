@@ -4,29 +4,56 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import RegistrationForm from './components/RegistrationForm';
 import Analytics from './pages/Analytics';
+import LoginScreen from './components/LoginScreen'; // Import the new LoginScreen
 import { Employee } from './types';
 import { EmployeeService, CacheService } from './services/api';
+import { SCRIPT_URL } from './constants';
 
 const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState('dashboard');
   const [allEmployees, setAllEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Use useCallback to memoize the loadData function, preventing re-renders.
+  // Check for authentication status in session storage on initial load
+  useEffect(() => {
+    if (sessionStorage.getItem('isAuthenticated') === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogin = (password: string) => {
+    // Hardcoded password check
+    if (password === 'industrialclinic') {
+      setIsAuthenticated(true);
+      setLoginError(null);
+      sessionStorage.setItem('isAuthenticated', 'true'); // Persist session
+    } else {
+      setLoginError('Incorrect password. Please try again.');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('isAuthenticated');
+  };
+  
   const loadData = useCallback(async (forceRefresh = false) => {
-    // Only show a full-page loader on the very first load when there's no cache.
     if (!forceRefresh && allEmployees.length === 0) {
       setLoading(true);
     }
     setError(null);
     try {
+      if (!SCRIPT_URL) {
+        throw new Error("Backend URL is not configured. Please update `constants.ts` with your deployed Apps Script URL.");
+      }
       const data = await EmployeeService.getAll(forceRefresh);
       setAllEmployees(data);
-      CacheService.set(data); // Update the cache with fresh data.
+      CacheService.set(data);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
-      // Only show an error screen if we failed to load any data at all.
       if (allEmployees.length === 0) {
         setError(errorMessage);
       }
@@ -34,43 +61,38 @@ const App: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [allEmployees.length]); // Dependency ensures this function is stable unless the array presence changes.
+  }, [allEmployees.length]);
 
-  // This effect runs once on initial mount to load data.
+  // Load data only when authenticated
   useEffect(() => {
-    const cachedData = CacheService.get();
-    if (cachedData) {
-      setAllEmployees(cachedData);
-      setLoading(false); // Instantly show cached data.
-      loadData(false); // Then, fetch fresh data in the background.
-    } else {
-      loadData(false); // No cache, so fetch data with a loading screen.
+    if (isAuthenticated) {
+      const cachedData = CacheService.get();
+      if (cachedData) {
+        setAllEmployees(cachedData);
+        setLoading(false);
+        loadData(false);
+      } else {
+        loadData(false);
+      }
     }
-  }, [loadData]); // The dependency array is correct now with useCallback.
+  }, [isAuthenticated, loadData]);
+
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={handleLogin} error={loginError} />;
+  }
 
   const renderView = () => {
-    // Filter for active employees once, and pass the result to the components.
     const activeEmployees = allEmployees.filter(e => e.status === 'Active');
-
-    // Only show the main loading/error component if there's no data to display.
     const showInitialLoader = loading && allEmployees.length === 0;
 
     switch (currentView) {
       case 'dashboard':
-        return (
-          <Dashboard 
-            employees={activeEmployees} 
-            loading={showInitialLoader}
-            error={error} 
-            onRefresh={() => loadData(true)} 
-          />
-        );
+        return <Dashboard employees={activeEmployees} loading={showInitialLoader} error={error} onRefresh={() => loadData(true)} />;
       case 'register':
         return (
           <div className="p-8">
             <RegistrationForm 
               onSuccess={() => {
-                // After successful registration, force a refresh and switch to the dashboard.
                 loadData(true).then(() => {
                   setCurrentView('dashboard');
                 });
@@ -79,27 +101,15 @@ const App: React.FC = () => {
           </div>
         );
       case 'analytics':
-        return (
-          <Analytics 
-            employees={activeEmployees} 
-            loading={showInitialLoader}
-          />
-        );
+        return <Analytics employees={activeEmployees} loading={showInitialLoader} />;
       default:
-        return (
-          <Dashboard 
-            employees={activeEmployees} 
-            loading={showInitialLoader}
-            error={error} 
-            onRefresh={() => loadData(true)} 
-          />
-        );
+        return <Dashboard employees={activeEmployees} loading={showInitialLoader} error={error} onRefresh={() => loadData(true)} />;
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-bg-main">
-      <Header />
+      <Header onLogout={handleLogout} />
       <div className="flex flex-1">
         <Sidebar currentView={currentView} onChangeView={setCurrentView} />
         <main className="flex-1 overflow-x-hidden overflow-y-auto">
