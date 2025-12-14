@@ -1,0 +1,5 @@
+{
+  "name": "Osmak Health Tracker",
+  "description": "Employee health tracking system for Ospital ng Makati, featuring comorbidity management, APE tracking, and analytics.",
+  "requestFramePermissions": []
+}
