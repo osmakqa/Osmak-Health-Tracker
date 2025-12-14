@@ -152,7 +152,7 @@ function getEmployees(forceRefresh = false) {
     'Middle Initial': 'middleInitial', 'Sex': 'sex', 'DOB': 'dob', 'Age': 'age', 'Division': 'division', 
     'Comorbidities (JSON)': 'comorbidities', 'Other Comorbidities': 'otherComorbidities', 
     'Past Medical History (JSON)': 'pastMedicalHistory', 'Other Past Medical History': 'otherPastMedicalHistory', 
-    'Maintenance Meds (JSON)': 'maintenanceMds', 'APE Date': 'apeDate', 'APE Status': 'apeStatus', 
+    'Maintenance Meds (JSON)': 'maintenanceMeds', 'APE Date': 'apeDate', 'APE Status': 'apeStatus', 
     'Sick Leaves (JSON)': 'sickLeaves', 'Admissions (JSON)': 'admissions', 'Nutrition Referral': 'nutritionReferral', 
     'Nutrition Referral Date': 'nutritionReferralDate', 'Status': 'status', 'Status Reason': 'statusReason', 
     'Weight': 'weight', 'Weight History (JSON)': 'weightHistory', 'ER Visits (JSON)': 'erVisits', 
