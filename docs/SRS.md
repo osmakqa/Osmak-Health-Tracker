@@ -1,4 +1,3 @@
-
 # Software Requirements Specification (SRS) (ISO 9001:2015 Clause 8.3.3)
 
 **Project:** Employee Health & Wellness Tracker  
@@ -13,7 +12,6 @@ This document defines the functional and non-functional inputs required for the 
 
 ### 2.1 User Roles & Access
 *   **System Administrator / Data Custodian:** A single-role design where the user has full access to all functionalities, including registering, viewing, updating, and managing all employee records. Access is controlled by the URL of the web app.
-*   **Secret Admin Access:** Tapping the header logo 5 times and entering a password provides a direct link to the underlying Google Sheet database for administrative purposes.
 
 ### 2.2 Core Modules
 *   **Registration Module:**

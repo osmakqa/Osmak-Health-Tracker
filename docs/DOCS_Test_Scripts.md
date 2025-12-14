@@ -1,4 +1,3 @@
-
 # Verification Record - Test Scripts (ISO 9001:2015 Clause 8.3.4)
 
 **Project:** Employee Health & Wellness Tracker  
@@ -17,7 +16,6 @@
 | **TC-006** | **Log Sick Leave** | In the modal, go to "Logs & Actions". Fill in dates and diagnosis for a sick leave. Click "Add". | The new sick leave record should appear in the log below the form. | | |
 | **TC-007** | **Deactivate Employee** | In the modal, go to "Status Management". Select "Retired" and enter a reason. Click "Confirm Removal". | The modal should close. The employee should no longer appear in the active dashboard list. | | |
 | **TC-008** | **Analytics Chart** | Go to "Data Analysis". The page should load charts. Click on a bar in the "Age Group" chart. | A filter tag should appear at the top. All other charts and stats on the page should update to reflect the filter. | | |
-| **TC-009** | **Secret Admin Link** | Click the OsMak logo in the header 5 times in quick succession. | A password prompt should appear. | | |
 | **TC-010** | **Data Persistence** | Register a new employee. Force refresh the page (Ctrl+F5). | The new employee should still be present in the dashboard list, confirming data was saved to the backend. | | |
 
 ---

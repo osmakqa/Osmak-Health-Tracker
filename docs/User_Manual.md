@@ -1,4 +1,3 @@
-
 # User Manual: Employee Health & Wellness Tracker
 **Ospital ng Makati – Occupational Health**
 
@@ -13,12 +12,6 @@ The **Employee Health & Wellness Tracker** is a web-based application designed t
 1.  Open your web browser (Chrome is recommended).
 2.  Navigate to the system URL provided by the IT or Occupational Health Department.
 3.  The system does not require a login. Access is controlled via the unique URL.
-
-### Secret Admin Access
-For administrative purposes, direct access to the backend Google Sheet is available.
-1.  Click the **Ospital ng Makati logo** in the top-left corner 5 times in quick succession.
-2.  An input box will appear. Enter the admin password (`osmak123`).
-3.  The Google Sheet will open in a new tab.
 
 ---
 
@@ -88,4 +81,3 @@ When you click on an employee, a detailed modal appears with four tabs.
 | **Data is not loading or seems outdated.** | Click the "Refresh" button on the Dashboard. If the problem persists, contact IT to ensure the Google Apps Script backend is running correctly. |
 | **"Failed to load data" error on Dashboard.**| This indicates a problem connecting to the Google Sheet backend. Verify your internet connection and check if the Google Sheet is accessible. |
 | **A removed employee still appears.**| Data is cached for performance. Click the "Refresh" button to force an update from the backend. |
-
